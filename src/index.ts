@@ -69,7 +69,7 @@ await fetchAndSaveReport(tableName);
 
 export const getDataViaIbmDbConnection = async (tableName): Promise<any> => {
   let connStr = `DATABASE=${process.env.VHS_GUS_DB_NAME};HOSTNAME=${process.env.VHS_GUS_HOST};UID=${process.env.VHS_GUS_USERNAME};PWD=${process.env.VHS_GUS_PASSWORD};PORT=${process.env.VHS_GUS_PORT};PROTOCOL=TCPIP`;
-
+  console.log(connStr);
   return new Promise((resolve, reject) => {
     ibmdb.open(connStr, (err, conn) => {
       if (err) console.log(err);
