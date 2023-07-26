@@ -1,0 +1,11 @@
+export const config = {
+  vhsGusDb: {
+    dbName: process.env.VHS_GUS_DB_NAME,
+    host: process.env.VHS_GUS_HOST,
+    port: process.env.VHS_GUS_PORT,
+    username: process.env.VHS_GUS_USERNAME,
+    password: process.env.VHS_GUS_PASSWORD,
+    tableNamePriceStock: "gus.Rep_Preis_Bestand",
+    tableNameLadenShopAmazon: "gus.REP_LADEN_SHOP_AMAZON_VK",
+  },
+};

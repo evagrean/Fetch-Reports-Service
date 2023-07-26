@@ -1,0 +1,9 @@
+node_modules/
+**/*.js
+.env.development
+.env.production
+**/*.csv
+config.ts
+**/*.ovpn
+**/*.p12
+/reports

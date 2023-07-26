@@ -1,0 +1,21 @@
+{
+  "name": "fetch-reports-service",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "fetch-price-stock": "tsc && node src/index.js price-stock"
+  },
+  "author": "Eva Greiner-Anzenbacher",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "ibm_db": "^3.2.1",
+    "papaparse": "^5.4.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.4.5"
+  }
+}
