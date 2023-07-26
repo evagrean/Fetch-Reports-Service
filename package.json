@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "fetch-price-stock": "tsc && node src/index.js price-stock"
+    "fetch-price-stock": "tsc && NODE_ENV=production node src/index.js price-stock"
   },
   "author": "Eva Greiner-Anzenbacher",
   "license": "ISC",
