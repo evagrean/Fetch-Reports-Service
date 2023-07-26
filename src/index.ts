@@ -28,6 +28,7 @@ const formatDate = (newDate) => {
 };
 
 const fetchAndSaveReport = async (tableName) => {
+  console.log(tableName);
   // get current date and format
   const today = new Date();
   const todayFormatted = formatDate(today);
@@ -76,7 +77,7 @@ export const getDataViaIbmDbConnection = async (tableName): Promise<any> => {
         err ? reject(err) : resolve(data);
         conn.close(() =>
           console.log(
-            `fetching data from ${config.vhsGusDb.dbName} - ${tableName} completed`
+            `fetching data from ${config.vhsGusDb.tableNamePriceStock} - ${tableName} completed`
           )
         );
       });
