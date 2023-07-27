@@ -10,10 +10,15 @@ const reference = process.argv[2].toString();
 console.log(`reference: ${reference}`);
 let tableName;
 let fileNameBasic;
+let DB2QueryString;
 
 if (reference === "price-stock") {
   tableName = config.vhsGusDb.tableNamePriceStock;
   fileNameBasic = config.fileNamePriceStockReport;
+  DB2QueryString = `select * from ${tableName}`;
+} else if (reference === "laden-shop-amazon") {
+  tableName = config.vhsGusDb.tableNameLadenShopAmazon;
+  fileNameBasic = config.fileNameLadenShopAmazonVK;
 }
 const formatDate = (newDate) => {
   let yyyy = newDate.getFullYear();
@@ -27,7 +32,7 @@ const formatDate = (newDate) => {
   return dateFormatted;
 };
 
-const fetchAndSaveReport = async (tableName) => {
+const fetchAndSaveReport = async (tableName, fileNameBasic, DB2QueryString) => {
   console.log(tableName);
   // get current date and format
   const today = new Date();
@@ -45,7 +50,10 @@ const fetchAndSaveReport = async (tableName) => {
     if (alreadyExists) {
       console.log("report already exists");
     } else {
-      const reportData = await getDataViaIbmDbConnection(tableName);
+      const reportData = await getDataViaIbmDbConnection(
+        tableName,
+        DB2QueryString
+      );
       if (reportData) {
         // Delete VHS-key so that EAN is on first place
         const withoutVHSColumn = reportData.map(
@@ -59,7 +67,7 @@ const fetchAndSaveReport = async (tableName) => {
           if (error) {
             console.log("error saving file " + error);
           } else {
-            console.log(`report ${fileName} saved to archive`);
+            console.log(`report ${fileName} saved to reports folder`);
           }
         });
       } else {
@@ -69,17 +77,20 @@ const fetchAndSaveReport = async (tableName) => {
   });
 };
 
-await fetchAndSaveReport(tableName);
+await fetchAndSaveReport(tableName, fileNameBasic, DB2QueryString);
 
 // Establish connection to ExitB IBM DB2
 
-export const getDataViaIbmDbConnection = async (tableName): Promise<any> => {
+export const getDataViaIbmDbConnection = async (
+  tableName,
+  DB2QueryString
+): Promise<any> => {
   let connStr = `DATABASE=${process.env.VHS_GUS_DB_NAME};HOSTNAME=${process.env.VHS_GUS_HOST};UID=${process.env.VHS_GUS_USERNAME};PWD=${process.env.VHS_GUS_PASSWORD};PORT=${process.env.VHS_GUS_PORT};PROTOCOL=TCPIP`;
   console.log(connStr);
   return new Promise((resolve, reject) => {
     ibmdb.open(connStr, (err, conn) => {
       if (err) console.log(err);
-      conn.query(`select * from ${tableName}`, (err, data) => {
+      conn.query(DB2QueryString, (err, data) => {
         err ? reject(err) : resolve(data);
         conn.close(() =>
           console.log(`fetching data from ${tableName} completed`)
