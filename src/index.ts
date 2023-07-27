@@ -13,7 +13,7 @@ let fileNameBasic;
 
 if (reference === "price-stock") {
   tableName = config.vhsGusDb.tableNamePriceStock;
-  fileNameBasic = "REP_PREIS_BESTAND_NEW";
+  fileNameBasic = config.fileNamePriceStockReport;
 }
 const formatDate = (newDate) => {
   let yyyy = newDate.getFullYear();
@@ -76,9 +76,7 @@ export const getDataViaIbmDbConnection = async (tableName): Promise<any> => {
       conn.query(`select * from ${tableName}`, (err, data) => {
         err ? reject(err) : resolve(data);
         conn.close(() =>
-          console.log(
-            `fetching data from ${config.vhsGusDb.tableNamePriceStock} - ${tableName} completed`
-          )
+          console.log(`fetching data from ${tableName} completed`)
         );
       });
     });
