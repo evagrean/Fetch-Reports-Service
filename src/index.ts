@@ -47,7 +47,13 @@ const fetchAndSaveReport = async (tableName) => {
     } else {
       const reportData = await getDataViaIbmDbConnection(tableName);
       if (reportData) {
-        const reportDataCsv = papaparse.unparse(reportData, { newline: "\n" });
+        // Delete VHS-key so that EAN is on first place
+        const withoutVHSColumn = reportData.map(
+          ({ VHS_ART_NR, ...item }) => item
+        );
+        const reportDataCsv = papaparse.unparse(withoutVHSColumn, {
+          newline: "\n",
+        });
 
         fs.writeFile(`../reports/${fileName}`, reportDataCsv, (error) => {
           if (error) {
