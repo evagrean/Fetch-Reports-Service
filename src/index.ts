@@ -19,7 +19,7 @@ if (reference === "price-stock") {
 } else if (reference === "laden-shop-amazon") {
   tableName = config.vhsGusDb.tableNameLadenShopAmazon;
   fileNameBasic = config.fileNameLadenShopAmazonVK;
-  DB2QueryString = `select EAN, ART_NR, CLASSIFICATION1, CLASSIFICATION5, VK_ANZ_LADEN_1M, VK_ANZ_LADEN_3M, VK_ANZ_SHOP_1M, VK_ANZ_SHOP_3M, VK_ANZ_SHOP_1J, VK_ANZ_AMA_1M, VK_ANZ_AMA_3M, VK_ANZ_MARKTPLATZ_1M, VK_ANZ_MARKTPLATZ_3M, VK_ANZ_MARKTPLATZ_1J, BESTAND, BESTAND_EXCL_AMAZON from ${tableName}`;
+  DB2QueryString = `select EAN, ART_NR, CLASSIFICATION1, CLASSIFICATION5, VK_ANZ_LADEN_1M, VK_ANZ_LADEN_3M, VK_ANZ_SHOP_1M, VK_ANZ_SHOP_3M, VK_ANZ_SHOP_1J, VK_ANZ_AMA_1M, VK_ANZ_AMA_3M, VK_ANZ_MARKTPLATZ_1M, VK_ANZ_MARKTPLATZ_3M, VK_ANZ_MARKTPLATZ_1J, BESTAND, BESTAND_EXKL_AMAZON from ${tableName}`;
 }
 const formatDate = (newDate) => {
   let yyyy = newDate.getFullYear();
