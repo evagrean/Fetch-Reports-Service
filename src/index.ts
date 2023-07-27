@@ -19,6 +19,7 @@ if (reference === "price-stock") {
 } else if (reference === "laden-shop-amazon") {
   tableName = config.vhsGusDb.tableNameLadenShopAmazon;
   fileNameBasic = config.fileNameLadenShopAmazonVK;
+  DB2QueryString = `select EAN, ART_NR, CLASSIFICATON4, CLASSIFICATION5, VK_ANZ_LADEN_1M, VK_ANZ_LADEN_3M, VK_ANZ_SHOP_1M, VK_ANZ_SHOP_3M, V_ANZ_SHOP_1J, VK_ANZ_AMA_1M, VK_ANZ_AMA_3M, VK_ANZ_MARKTPLATZ_1M, VK_ANZ_MARKTPLATZ_3M, VK_ANZAHL_MARKTPLATZ_1J, BESTAND, BESTAND_EXCL_AMAZON from ${tableName}`;
 }
 const formatDate = (newDate) => {
   let yyyy = newDate.getFullYear();
@@ -55,13 +56,18 @@ const fetchAndSaveReport = async (tableName, fileNameBasic, DB2QueryString) => {
         DB2QueryString
       );
       if (reportData) {
-        // Delete VHS-key so that EAN is on first place
-        const withoutVHSColumn = reportData.map(
-          ({ VHS_ART_NR, ...item }) => item
-        );
-        const reportDataCsv = papaparse.unparse(withoutVHSColumn, {
-          newline: "\n",
-        });
+        let reportDataCsv;
+        if (reference === "price-stock") {
+          // Delete VHS-key so that EAN is on first place
+          const withoutVHSColumn = reportData.map(
+            ({ VHS_ART_NR, ...item }) => item
+          );
+          reportDataCsv = papaparse.unparse(withoutVHSColumn, {
+            newline: "\n",
+          });
+        } else if (reference === "laden-shop-amazon") {
+          reportDataCsv = papaparse.unparse(reportData);
+        }
 
         fs.writeFile(`../reports/${fileName}`, reportDataCsv, (error) => {
           if (error) {
