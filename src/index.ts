@@ -57,6 +57,7 @@ const fetchAndSaveReport = async (tableName, fileNameBasic, DB2QueryString) => {
       );
       if (reportData) {
         let reportDataCsv;
+
         if (reference === "price-stock") {
           // Delete VHS-key so that EAN is on first place
           const withoutVHSColumn = reportData.map(
@@ -97,10 +98,11 @@ export const getDataViaIbmDbConnection = async (
     ibmdb.open(connStr, (err, conn) => {
       if (err) console.log(err);
       conn.query(DB2QueryString, (err, data) => {
+        if (data) {
+          console.log(`fetching data from ${tableName} completed`);
+        }
         err ? reject(err) : resolve(data);
-        conn.close(() =>
-          console.log(`fetching data from ${tableName} completed`)
-        );
+        conn.close(() => console.log(`connection closed`));
       });
     });
   });
