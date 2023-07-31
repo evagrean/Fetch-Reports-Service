@@ -98,11 +98,14 @@ export const getDataViaIbmDbConnection = async (
     ibmdb.open(connStr, (err, conn) => {
       if (err) console.log(err);
       conn.query(DB2QueryString, (err, data) => {
+        console.log(`DB2 Query String: ${DB2QueryString}`);
         if (data.length) {
           console.log(data);
           console.log(`fetching data from ${tableName} completed`);
         } else {
-          console.log("no data available " + err);
+          console.log(data);
+          console.log("no data available: ");
+          console.log(err);
         }
         err ? reject(err) : resolve(data);
         conn.close(() => console.log(`connection closed`));
