@@ -99,6 +99,7 @@ export const getDataViaIbmDbConnection = async (
       if (err) console.log(err);
       conn.query(DB2QueryString, (err, data) => {
         if (data) {
+          console.log(data);
           console.log(`fetching data from ${tableName} completed`);
         }
         err ? reject(err) : resolve(data);
