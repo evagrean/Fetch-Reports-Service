@@ -65,13 +65,19 @@ const fetchAndSaveReport = async (tableName, fileNameBasic, DB2QueryString) => {
             ({ VHS_ART_NR, ...item }) => item
           );
           const priceWithComma = reportData.map((item) => {
-            return {
-              ...item,
-              LIEFER_EK_EUR_PREFERRED: item.LIEFER_EK_EUR_PREFERRED.replace(
-                ".",
-                ","
-              ),
-            };
+            if (
+              item.LIEFER_EK_EUR_PREFERRED &&
+              item.LIEFER_EK_EUR_PREFERRED.includes(".")
+            ) {
+              return {
+                ...item,
+                LIEFER_EK_EUR_PREFERRED: item.LIEFER_EK_EUR_PREFERRED.replace(
+                  ".",
+                  ","
+                ),
+              };
+            }
+            return item;
           });
           reportDataCsv = papaparse.unparse(priceWithComma, {
             newline: "\n",
