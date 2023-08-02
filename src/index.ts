@@ -101,7 +101,7 @@ export const getDataViaIbmDbConnection = async (
       conn.query(DB2QueryString, (err, data) => {
         console.log(`DB2 Query String: ${DB2QueryString}`);
         if (data.length) {
-          console.log(data);
+          // console.log(data);
           console.log(`fetching data from ${tableName} completed`);
         } else {
           console.log(data);
