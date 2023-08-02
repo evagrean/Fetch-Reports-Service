@@ -3,7 +3,7 @@ import papaparse from "papaparse";
 import * as ibmdb from "ibm_db";
 import fs from "fs";
 import { config } from "../config/config.js";
-import { testData } from "../config/config.js";
+//import { testData } from "../config/config.js";
 
 dotenv.config({ path: `./.env.${process.env.NODE_ENV}` });
 
@@ -133,23 +133,23 @@ export const getDataViaIbmDbConnection = async (
   });
 };
 
-const mapArray = () => {
-  const array = testData;
-  const commaPrice = array.map((item) => {
-    if (
-      item.LIEFER_EK_EUR_PREFERRED &&
-      item.LIEFER_EK_EUR_PREFERRED.includes(".")
-    ) {
-      return {
-        ...item,
-        LIEFER_EK_EUR_PREFERRED: item.LIEFER_EK_EUR_PREFERRED.replace(".", ","),
-      };
-    }
-    return item;
-  });
-  console.log(commaPrice);
-};
+// const mapArray = () => {
+//   const array = testData;
+//   const commaPrice = array.map((item) => {
+//     if (
+//       item.LIEFER_EK_EUR_PREFERRED &&
+//       item.LIEFER_EK_EUR_PREFERRED.includes(".")
+//     ) {
+//       return {
+//         ...item,
+//         LIEFER_EK_EUR_PREFERRED: item.LIEFER_EK_EUR_PREFERRED.replace(".", ","),
+//       };
+//     }
+//     return item;
+//   });
+//   console.log(commaPrice);
+// };
 
-if (reference === "test") {
-  mapArray();
-}
+// if (reference === "test") {
+//   mapArray();
+// }
