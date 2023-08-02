@@ -64,7 +64,16 @@ const fetchAndSaveReport = async (tableName, fileNameBasic, DB2QueryString) => {
           const withoutVHSColumn = reportData.map(
             ({ VHS_ART_NR, ...item }) => item
           );
-          reportDataCsv = papaparse.unparse(withoutVHSColumn, {
+          const priceWithComma = reportData.map((item) => {
+            return {
+              ...item,
+              LIEFER_EK_EUR_PREFERRED: item.LIEFER_EK_EUR_PREFERRED.replace(
+                ".",
+                ","
+              ),
+            };
+          });
+          reportDataCsv = papaparse.unparse(priceWithComma, {
             newline: "\n",
           });
         } else if (reference === "laden-shop-amazon") {
