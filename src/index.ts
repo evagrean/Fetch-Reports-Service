@@ -71,16 +71,27 @@ const fetchAndSaveReport = async (tableName, fileNameBasic, DB2QueryString) => {
               item.LIEFER_EK_EUR_PREFERRED &&
               item.LIEFER_EK_EUR_PREFERRED.includes(".")
             ) {
-              console.log(item.LIEFER_EK_EUR_PREFERRED);
-              return {
-                ...item,
-                LIEFER_EK_EUR_PREFERRED: item.LIEFER_EK_EUR_PREFERRED.replace(
-                  ".",
-                  ","
-                ),
-              };
+              if (item.LIEFER_EK_EUR_PREFERRED.startsWith(".")) {
+                console.log(item.LIEFER_EK_EUR_PREFERRED);
+                return {
+                  ...item,
+                  LIEFER_EK_EUR_PREFERRED: `0${item.LIEFER_EK_EUR_PREFERRED.replace(
+                    ".",
+                    ","
+                  )}`,
+                };
+              } else {
+                return {
+                  ...item,
+                  LIEFER_EK_EUR_PREFERRED: item.LIEFER_EK_EUR_PREFERRED.replace(
+                    ".",
+                    ","
+                  ),
+                };
+              }
+            } else {
+              return item;
             }
-            return item;
           });
           reportDataCsv = papaparse.unparse(priceWithComma, {
             newline: "\n",
