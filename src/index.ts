@@ -66,7 +66,7 @@ const fetchAndSaveReport = async (tableName, fileNameBasic, DB2QueryString) => {
             ({ VHS_ART_NR, ...item }) => item
           );
 
-          const priceWithComma = withoutVHSColumn.map((item) => {
+          const purchasePriceWithComma = withoutVHSColumn.map((item) => {
             if (
               item.LIEFER_EK_EUR_PREFERRED &&
               item.LIEFER_EK_EUR_PREFERRED.includes(".")
@@ -93,8 +93,26 @@ const fetchAndSaveReport = async (tableName, fileNameBasic, DB2QueryString) => {
               return item;
             }
           });
-          console.log(priceWithComma[0]);
-          reportDataCsv = papaparse.unparse(priceWithComma, {
+
+          const salesPriceWithComma = purchasePriceWithComma.map((item) => {
+            if (item.VK && item.VK.includes(".")) {
+              if (item.VK.startsWith(".")) {
+                return {
+                  ...item,
+                  VK: `0${item.VK.replace(".", ",")}`,
+                };
+              } else {
+                return {
+                  ...item,
+                  VK: item.VK.replace(".", ","),
+                };
+              }
+            } else {
+              return item;
+            }
+          });
+
+          reportDataCsv = papaparse.unparse(salesPriceWithComma, {
             newline: "\n",
           });
         } else if (reference === "laden-shop-amazon") {
