@@ -66,7 +66,6 @@ const fetchAndSaveReport = async (tableName, fileNameBasic, DB2QueryString) => {
             ({ VHS_ART_NR, ...item }) => item
           );
 
-          console.log(withoutVHSColumn);
           const priceWithComma = withoutVHSColumn.map((item) => {
             if (
               item.LIEFER_EK_EUR_PREFERRED &&
