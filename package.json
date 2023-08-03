@@ -7,8 +7,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "fetch-price-stock": "tsc && NODE_ENV=production node src/index.js price-stock",
-    "fetch-laden-shop-amazon": "tsc && NODE_ENV=production node src/index.js laden-shop-amazon",
-    "test-mapping": "tsc && NODE_ENV=production node src/index.js test"
+    "fetch-laden-shop-amazon": "tsc && NODE_ENV=production node src/index.js laden-shop-amazon"
   },
   "author": "Eva Greiner-Anzenbacher",
   "license": "ISC",
