@@ -93,6 +93,7 @@ const fetchAndSaveReport = async (tableName, fileNameBasic, DB2QueryString) => {
               return item;
             }
           });
+          console.log(priceWithComma[0]);
           reportDataCsv = papaparse.unparse(priceWithComma, {
             newline: "\n",
           });
