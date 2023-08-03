@@ -95,8 +95,8 @@ const fetchAndSaveReport = async (tableName, fileNameBasic, DB2QueryString) => {
           });
 
           const salesPriceWithComma = purchasePriceWithComma.map((item) => {
-            if (item.VK && item.VK.includes(".")) {
-              if (item.VK.startsWith(".")) {
+            if (item.VK && item.VK.toString().includes(".")) {
+              if (item.VK.toString().startsWith(".")) {
                 return {
                   ...item,
                   VK: `0${item.VK.replace(".", ",")}`,
@@ -104,7 +104,7 @@ const fetchAndSaveReport = async (tableName, fileNameBasic, DB2QueryString) => {
               } else {
                 return {
                   ...item,
-                  VK: item.VK.replace(".", ","),
+                  VK: item.VK.toString().replace(".", ","),
                 };
               }
             } else {
